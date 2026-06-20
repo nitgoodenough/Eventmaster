@@ -20,3 +20,55 @@ def dashboard(): # fx ran when user visits homepage
                            total_speakers=total_speakers,
                            upcoming_events=upcoming_events)
 # Load the dashboard.html file and pass all those numbers/lists to it so the HTML can display them.
+
+# ─── Events ──────────────────────────────────────────────────────────────────
+
+@main.route('/events')
+def events():
+    all_events = Event.query.all()
+    return render_template('events/index.html', events=all_events)
+
+@main.route('/events/new', methods=['GET', 'POST'])
+def new_event():
+    if request.method == 'POST':
+        event = Event(
+            name=request.form['name'],
+            date=request.form['date'],
+            venue=request.form['venue'],
+            description=request.form.get('description', ''),
+            capacity=int(request.form['capacity']),
+            ticket_price=float(request.form['ticket_price'])
+        )
+        db.session.add(event)
+        db.session.commit()
+        flash('Event created successfully!', 'success')
+        return redirect(url_for('main.events'))
+    return render_template('events/new.html')
+
+@main.route('/events/<int:id>')
+def event_detail(id):
+    event = Event.query.get_or_404(id)
+    return render_template('events/detail.html', event=event)
+
+@main.route('/events/<int:id>/edit', methods=['GET', 'POST'])
+def edit_event(id):
+    event = Event.query.get_or_404(id)
+    if request.method == 'POST':
+        event.name = request.form['name']
+        event.date = request.form['date']
+        event.venue = request.form['venue']
+        event.description = request.form.get('description', '')
+        event.capacity = int(request.form['capacity'])
+        event.ticket_price = float(request.form['ticket_price'])
+        db.session.commit()
+        flash('Event updated!', 'success')
+        return redirect(url_for('main.events'))
+    return render_template('events/edit.html', event=event)
+
+@main.route('/events/<int:id>/delete', methods=['POST'])
+def delete_event(id):
+    event = Event.query.get_or_404(id)
+    db.session.delete(event)
+    db.session.commit()
+    flash('Event deleted.', 'info')
+    return redirect(url_for('main.events'))
