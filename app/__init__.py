@@ -17,8 +17,8 @@ def create_app(): # Function that builds the app when run.py is ran
     db.init_app(app)
 
     # Register routes, then add to the app so it knows where to look for them
-    from app.routes import main
-    app.register_blueprint(main)
+    from app.routes import main 
+    app.register_blueprint(main) # register_blueprint adds the routes
 
     # Create database tables if they don't exist
     with app.app_context():

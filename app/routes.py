@@ -14,7 +14,7 @@ def dashboard(): # fx ran when user visits homepage
     total_registrations = Registration.query.count()
     total_speakers = Speaker.query.count()
     upcoming_events = Event.query.filter_by(status='upcoming').all() # Finds all events with status 'upcoming' and returns them as a list
-    return render_template('dashboard.html',
+    return render_template('dashboard.html', # Flask fx grabs html file in quotes + sends to browser (inc data)
                            total_events=total_events, # Name for html > Value from python for all these variables
                            total_registrations=total_registrations,
                            total_speakers=total_speakers,
@@ -23,52 +23,9 @@ def dashboard(): # fx ran when user visits homepage
 
 # ─── Events ──────────────────────────────────────────────────────────────────
 
-@main.route('/events')
+@main.route('/events') # When someone visits /events, this function is called
 def events():
-    all_events = Event.query.all()
-    return render_template('events/index.html', events=all_events)
-
-@main.route('/events/new', methods=['GET', 'POST'])
-def new_event():
-    if request.method == 'POST':
-        event = Event(
-            name=request.form['name'],
-            date=request.form['date'],
-            venue=request.form['venue'],
-            description=request.form.get('description', ''),
-            capacity=int(request.form['capacity']),
-            ticket_price=float(request.form['ticket_price'])
-        )
-        db.session.add(event)
-        db.session.commit()
-        flash('Event created successfully!', 'success')
-        return redirect(url_for('main.events'))
-    return render_template('events/new.html')
-
-@main.route('/events/<int:id>')
-def event_detail(id):
-    event = Event.query.get_or_404(id)
-    return render_template('events/detail.html', event=event)
-
-@main.route('/events/<int:id>/edit', methods=['GET', 'POST'])
-def edit_event(id):
-    event = Event.query.get_or_404(id)
-    if request.method == 'POST':
-        event.name = request.form['name']
-        event.date = request.form['date']
-        event.venue = request.form['venue']
-        event.description = request.form.get('description', '')
-        event.capacity = int(request.form['capacity'])
-        event.ticket_price = float(request.form['ticket_price'])
-        db.session.commit()
-        flash('Event updated!', 'success')
-        return redirect(url_for('main.events'))
-    return render_template('events/edit.html', event=event)
-
-@main.route('/events/<int:id>/delete', methods=['POST'])
-def delete_event(id):
-    event = Event.query.get_or_404(id)
-    db.session.delete(event)
-    db.session.commit()
-    flash('Event deleted.', 'info')
-    return redirect(url_for('main.events'))
+    all_events = Event.query.all() # Gets the list of all events from the database and stores it in a variable not just rows count. This is a list of Event objects, not just a number
+    return render_template('events/index.html', events=all_events)  
+    # Like the others the html file will contain the data then the template will loop through the list and display each event in a table. 
+    # The variable name 'events' is what the html file will use to access the data.
