@@ -52,9 +52,9 @@ def event_detail(id):
     event = Event.query.get_or_404(id)  # get event by id, 404 if not found
     return render_template('events/detail.html', event=event)
 
-@main.route('/events/<int:id>/edit', methods=['GET', 'POST'])
+@main.route('/events/<int:id>/edit', methods=['GET', 'POST']) # gets the id of that specific event and allows edit
 def edit_event(id):
-    event = Event.query.get_or_404(id)
+    event = Event.query.get_or_404(id) # get event by id, 404 if not found
     if request.method == 'POST':
         event.name = request.form['name']
         event.date = request.form['date']
@@ -66,3 +66,11 @@ def edit_event(id):
         flash('Event updated!', 'success')
         return redirect(url_for('main.events'))
     return render_template('events/edit.html', event=event)
+
+@main.route('/events/<int:id>/delete', methods=['POST'])
+def delete_event(id):
+    event = Event.query.get_or_404(id)  # find the event or return 404
+    db.session.delete(event)  # remove it from the database
+    db.session.commit()  # save the change
+    flash('Event deleted.', 'info')
+    return redirect(url_for('main.events'))  # back to events list
