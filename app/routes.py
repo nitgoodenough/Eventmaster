@@ -29,3 +29,20 @@ def events():
     return render_template('events/index.html', events=all_events)  
     # Like the others the html file will contain the data then the template will loop through the list and display each event in a table. 
     # The variable name 'events' is what the html file will use to access the data.
+
+@main.route('/events/new', methods=['GET', 'POST'])
+def new_event():
+    if request.method == 'POST':
+        event = Event(
+            name=request.form['name'],
+            date=request.form['date'],
+            venue=request.form['venue'],
+            description=request.form.get('description', ''),
+            capacity=int(request.form['capacity']),
+            ticket_price=float(request.form['ticket_price'])
+        )
+        db.session.add(event)
+        db.session.commit()
+        flash('Event created successfully!', 'success')
+        return redirect(url_for('main.events'))
+    return render_template('events/new.html')
