@@ -23,26 +23,31 @@ def dashboard(): # fx ran when user visits homepage
 
 # ─── Events ──────────────────────────────────────────────────────────────────
 
-@main.route('/events') # When someone visits /events, this function is called
+@main.route('/events') # When someone visits events, this function is called
 def events():
     all_events = Event.query.all() # Gets the list of all events from the database and stores it in a variable not just rows count. This is a list of Event objects, not just a number
     return render_template('events/index.html', events=all_events)  
     # Like the others the html file will contain the data then the template will loop through the list and display each event in a table. 
     # The variable name 'events' is what the html file will use to access the data.
 
-@main.route('/events/new', methods=['GET', 'POST'])
+@main.route('/events/new', methods=['GET', 'POST']) # Get = visiting page (loading form), Post = submitting form (sending data to server)
 def new_event():
-    if request.method == 'POST':
-        event = Event(
+    if request.method == 'POST': # Same as earlier, left is variable, right is value. If the user submitted the form, then we want to create a new event in the database
+        event = Event( # Event is === the class in models.py, making new object. Making new row in table
             name=request.form['name'],
-            date=request.form['date'],
+            date=request.form['date'],  
             venue=request.form['venue'],
             description=request.form.get('description', ''),
             capacity=int(request.form['capacity']),
             ticket_price=float(request.form['ticket_price'])
         )
-        db.session.add(event)
-        db.session.commit()
-        flash('Event created successfully!', 'success')
-        return redirect(url_for('main.events'))
-    return render_template('events/new.html')
+        db.session.add(event)   # adds the new row temporarily
+        db.session.commit() # saves the new row to the database permanently
+        flash('Event created successfully!', 'success') # quick message for success
+        return redirect(url_for('main.events')) # back to events page
+    return render_template('events/new.html') # for the get request, just shows empty form
+
+@main.route('/events/<int:id>')
+def event_detail(id):
+    event = Event.query.get_or_404(id)  # get event by id, 404 if not found
+    return render_template('events/detail.html', event=event)
