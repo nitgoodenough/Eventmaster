@@ -51,3 +51,18 @@ def new_event():
 def event_detail(id):
     event = Event.query.get_or_404(id)  # get event by id, 404 if not found
     return render_template('events/detail.html', event=event)
+
+@main.route('/events/<int:id>/edit', methods=['GET', 'POST'])
+def edit_event(id):
+    event = Event.query.get_or_404(id)
+    if request.method == 'POST':
+        event.name = request.form['name']
+        event.date = request.form['date']
+        event.venue = request.form['venue']
+        event.description = request.form.get('description', '')
+        event.capacity = int(request.form['capacity'])
+        event.ticket_price = float(request.form['ticket_price'])
+        db.session.commit()  # no need for add() - event already exists in db
+        flash('Event updated!', 'success')
+        return redirect(url_for('main.events'))
+    return render_template('events/edit.html', event=event)
