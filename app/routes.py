@@ -14,8 +14,9 @@ def dashboard(): # fx ran when user visits homepage
     total_registrations = Registration.query.count()
     total_speakers = Speaker.query.count()
     upcoming_events = Event.query.filter_by(status='upcoming').all() # Finds all events with status 'upcoming' and returns them as a list
-    return render_template('dashboard.html', # Flask fx grabs html file in quotes + sends to browser (inc data)
-                           total_events=total_events, # Name for html > Value from python for all these variables
+    # render_template loads the html file and passes data to it so Jinja2 can fill in the placeholders
+    return render_template('dashboard.html',
+                           total_events=total_events,
                            total_registrations=total_registrations,
                            total_speakers=total_speakers,
                            upcoming_events=upcoming_events)
