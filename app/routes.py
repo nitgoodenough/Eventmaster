@@ -95,4 +95,27 @@ def new_speaker():
         db.session.commit()
         flash('Speaker added!', 'success')
         return redirect(url_for('main.speakers'))
-    return render_template('speakers/new.html') # stage the new row
+    return render_template('speakers/new.html')
+
+# ─── Registrations ───────────────────────────────────────────────────────────
+
+@main.route('/registrations')
+def registrations():
+    all_regs = Registration.query.all()  # get all registrations from db
+    return render_template('registrations/index.html', registrations=all_regs)
+
+@main.route('/registrations/new', methods=['GET', 'POST'])
+def new_registration():
+    events = Event.query.all()  # needed to populate event dropdown in form
+    if request.method == 'POST':
+        reg = Registration(
+            attendee_name=request.form['attendee_name'],
+            attendee_email=request.form['attendee_email'],
+            ticket_type=request.form['ticket_type'],
+            event_id=int(request.form['event_id'])  # links registration to an event
+        )
+        db.session.add(reg)
+        db.session.commit()
+        flash('Registration successful!', 'success')
+        return redirect(url_for('main.registrations'))
+    return render_template('registrations/new.html', events=events)
