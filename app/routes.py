@@ -119,3 +119,17 @@ def new_registration():
         flash('Registration successful!', 'success')
         return redirect(url_for('main.registrations'))
     return render_template('registrations/new.html', events=events)
+
+# ─── Reports ─────────────────────────────────────────────────────────────────
+
+@main.route('/reports')
+def reports():
+    events = Event.query.all()
+    report_data = []
+    for event in events:  # loop through each event and calculate stats
+        report_data.append({
+            'event': event,
+            'registrations': len(event.registrations),  # count registrations for this event
+            'revenue': len(event.registrations) * event.ticket_price  # total revenue
+        })
+    return render_template('reports/index.html', report_data=report_data)
