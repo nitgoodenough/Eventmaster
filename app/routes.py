@@ -132,4 +132,4 @@ def reports():
             'registrations': len(event.registrations),  # count registrations for this event
             'revenue': len(event.registrations) * event.ticket_price  # total revenue
         })
-    return render_template('reports/index.html', report_data=report_data)
+    return render_template('reports/index.html', report_data=report_data) # last part
