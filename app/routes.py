@@ -74,3 +74,25 @@ def delete_event(id):
     db.session.commit()  # save the change
     flash('Event deleted.', 'info')
     return redirect(url_for('main.events'))  # back to events list
+
+# ─── Speakers ────────────────────────────────────────────────────────────────
+
+@main.route('/speakers') # end of url link e.g. something/speakers. When user visits that link, this function is called
+def speakers():
+    all_speakers = Speaker.query.all()  # get all speakers from db
+    return render_template('speakers/index.html', speakers=all_speakers) # Passes the list of speakers to the html file so it can display them in a table
+
+@main.route('/speakers/new', methods=['GET', 'POST'])
+def new_speaker():
+    if request.method == 'POST':
+        speaker = Speaker(
+            name=request.form['name'], 
+            email=request.form['email'],
+            bio=request.form.get('bio', ''),
+            company=request.form.get('company', '')
+        )
+        db.session.add(speaker) # stage the new row
+        db.session.commit()
+        flash('Speaker added!', 'success')
+        return redirect(url_for('main.speakers'))
+    return render_template('speakers/new.html') # stage the new row
