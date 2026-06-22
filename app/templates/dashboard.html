@@ -1,0 +1,39 @@
+<!-- dashboard.html extends base.html, so it gets the navbar and layout automatically -->
+<!-- the {{ }} syntax is Jinja2 - it fills in Python variables passed from routes.py -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Dashboard</h1>
+</div>
+
+<!-- Summary cards showing key stats -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-calendar-event"></i> Total Events</h5>
+                <p class="card-text display-6">{{ total_events }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-ticket-perforated"></i> Total Registrations</h5>
+                <p class="card-text display-6">{{ total_registrations }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title"><i class="bi bi-person-video3"></i> Total Speakers</h5>
+                <p class="card-text display-6">{{ total_speakers }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
