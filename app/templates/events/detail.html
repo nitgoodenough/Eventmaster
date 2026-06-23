@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>{{ event.name }}</h1>
+    <div>
+        <a href="/events/{{ event.id }}/edit" class="btn btn-outline-secondary">Edit</a>
+        <a href="/events" class="btn btn-outline-primary">Back to Events</a>
+    </div>
+</div>
+
+<!-- event details card -->
+<div class="card mb-4">
+    <div class="card-body">
+        <p><strong>Date:</strong> {{ event.date }}</p>
+        <p><strong>Venue:</strong> {{ event.venue }}</p>
+        <p><strong>Capacity:</strong> {{ event.capacity }}</p>
+        <p><strong>Ticket Price:</strong> {{ event.ticket_price }}</p>
+        <p><strong>Status:</strong> {{ event.status }}</p>
+    </div>
+</div>
+
+<!-- sessions linked to this event via the relationship in models.py -->
+<h3>Sessions</h3>
+{% if event.sessions %}
+<table class="table table-striped">
+    <thead>
+        <tr><th>Title</th><th>Duration</th><th>Room</th></tr>
+    </thead>
+    <tbody>
+        {% for session in event.sessions %}
+        <tr>
+            <td>{{ session.title }}</td>
+            <td>{{ session.duration }} mins</td>
+            <td>{{ session.room }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="text-muted">No sessions added yet.</p>
+{% endif %}
+
+<!-- registrations for this event via the relationship in models.py -->
+<h3>Registrations</h3>
+{% if event.registrations %}
+<table class="table table-striped">
+    <thead>
+        <tr><th>Name</th><th>Email</th><th>Ticket Type</th><th>Payment</th></tr>
+    </thead>
+    <tbody>
+        {% for reg in event.registrations %}
+        <tr>
+            <td>{{ reg.attendee_name }}</td>
+            <td>{{ reg.attendee_email }}</td>
+            <td>{{ reg.ticket_type }}</td>
+            <td>{{ reg.payment_status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="text-muted">No registrations yet.</p>
+{% endif %}
+
+{% endblock %}
