@@ -10,14 +10,15 @@
     </div>
 </div>
 
-<!-- event details card -->
+<!-- event details card - event.name etc uses the event object passed from routes.py -->
 <div class="card mb-4">
     <div class="card-body">
         <p><strong>Date:</strong> {{ event.date }}</p>
         <p><strong>Venue:</strong> {{ event.venue }}</p>
         <p><strong>Capacity:</strong> {{ event.capacity }}</p>
-        <p><strong>Ticket Price:</strong> {{ event.ticket_price }}</p>
+        <p><strong>Ticket Price:</strong> £{{ event.ticket_price }}</p>
         <p><strong>Status:</strong> {{ event.status }}</p>
+        <p><strong>Description:</strong> {{ event.description }}</p>
     </div>
 </div>
 
