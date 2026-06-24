@@ -4,7 +4,6 @@
 
 <h1 class="mb-4">Reports</h1>
 
-<!-- summary stats across all events -->
 <div class="row mb-4">
     <div class="col-md-3">
         <div class="card text-center">
@@ -22,6 +21,44 @@
             </div>
         </div>
     </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ total_speakers }}</h3>
+                <p class="text-muted">Speakers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ total_revenue }}</h3>
+                <p class="text-muted">Est. Revenue</p>
+            </div>
+        </div>
+    </div>
 </div>
+
+<h3 class="mb-3">Event Breakdown</h3>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Date</th>
+            <th>Registrations</th>
+            <th>Capacity</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for event in events %}
+        <tr>
+            <td>{{ event.name }}</td>
+            <td>{{ event.date }}</td>
+            <td>{{ event.registrations | length }}</td>
+            <td>{{ event.capacity }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
