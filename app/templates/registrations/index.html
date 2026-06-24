@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Registrations</h1>
+    <a href="/registrations/new" class="btn btn-primary">+ New Registration</a>
+</div>
+
+{% if registrations %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Attendee</th>
+            <th>Email</th>
+            <th>Event</th>
+            <th>Ticket Type</th>
+            <th>Payment</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- loop through each registration passed from routes.py -->
+        {% for reg in registrations %}
+        <tr>
+            <td>{{ reg.attendee_name }}</td>
+            <td>{{ reg.attendee_email }}</td>
+            <!-- reg.event uses the relationship in models.py to grab the linked event name -->
+            <td>{{ reg.event.name }}</td>
+            <td>{{ reg.ticket_type }}</td>
+            <td>{{ reg.payment_status }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p class="text-muted">No registrations yet. <a href="/registrations/new">Add one</a></p>
+{% endif %}
+
+{% endblock %}
