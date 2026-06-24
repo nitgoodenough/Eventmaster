@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Speakers</h1>
+    <a href="/speakers/new" class="btn btn-primary">+ Add Speaker</a>
+</div>
+
+{% if speakers %}
+<div class="row">
+    <!-- loop through each speaker and display as a card -->
+    {% for speaker in speakers %}
+    <div class="col-md-4 mb-3">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">{{ speaker.name }}</h5>
+                <p class="text-muted mb-1">{{ speaker.expertise }}</p>
+                <p class="card-text">{{ speaker.bio }}</p>
+                <small class="text-muted">{{ speaker.email }}</small>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-muted">No speakers added yet. <a href="/speakers/new">Add your first speaker</a></p>
+{% endif %}
+
+{% endblock %}
