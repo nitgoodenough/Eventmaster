@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Edit Event</h1>
+    <a href="/events" class="btn btn-outline-secondary">Back to Events</a>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <!-- same form as new.html but pre-filled with existing event data using event.fieldname -->
+        <!-- POST to the edit route which updates the existing row in the database -->
+        <form method="POST" action="/events/{{ event.id }}/edit">
+            <div class="mb-3">
+                <label class="form-label">Event Name</label>
+                <input type="text" name="name" class="form-control" value="{{ event.name }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Date</label>
+                <input type="date" name="date" class="form-control" value="{{ event.date }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Venue</label>
+                <input type="text" name="venue" class="form-control" value="{{ event.venue }}" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea name="description" class="form-control" rows="3">{{ event.description }}</textarea>
+            </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Capacity</label>
+                    <input type="number" name="capacity" class="form-control" value="{{ event.capacity }}" required>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Ticket Price (£)</label>
+                    <input type="number" name="ticket_price" class="form-control" step="0.01" value="{{ event.ticket_price }}" required>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Changes</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
