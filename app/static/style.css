@@ -64,3 +64,17 @@ h1 {
     background-color: #1a1a2e;
     color: white;
 }
+
+/* dashboard stat cards */
+.stat-card {
+    background: linear-gradient(135deg, #1a1a2e, #e94560);
+    color: white;
+    border: none;
+}
+
+.stat-card .card-title {
+    font-size: 0.9rem;
+    opacity: 0.85;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
