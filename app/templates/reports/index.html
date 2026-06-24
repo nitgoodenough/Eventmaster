@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1 class="mb-4">Reports</h1>
+
+<!-- summary stats across all events -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ total_events }}</h3>
+                <p class="text-muted">Total Events</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <h3>{{ total_registrations }}</h3>
+                <p class="text-muted">Total Registrations</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
