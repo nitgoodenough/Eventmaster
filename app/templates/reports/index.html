@@ -4,6 +4,7 @@
 
 <h1 class="mb-4">Reports</h1>
 
+<!-- summary stats across all events -->
 <div class="row mb-4">
     <div class="col-md-3">
         <div class="card text-center">
@@ -32,13 +33,15 @@
     <div class="col-md-3">
         <div class="card text-center">
             <div class="card-body">
-                <h3>{{ total_revenue }}</h3>
+                <!-- revenue = registrations * ticket price, calculated in routes.py -->
+                <h3>£{{ total_revenue }}</h3>
                 <p class="text-muted">Est. Revenue</p>
             </div>
         </div>
     </div>
 </div>
 
+<!-- per event breakdown so u can see how each one is doing -->
 <h3 class="mb-3">Event Breakdown</h3>
 <table class="table table-striped">
     <thead>
@@ -47,6 +50,7 @@
             <th>Date</th>
             <th>Registrations</th>
             <th>Capacity</th>
+            <th>Ticket Price</th>
         </tr>
     </thead>
     <tbody>
@@ -54,8 +58,10 @@
         <tr>
             <td>{{ event.name }}</td>
             <td>{{ event.date }}</td>
+            <!-- .registrations uses the relationship from models.py, length counts how many -->
             <td>{{ event.registrations | length }}</td>
             <td>{{ event.capacity }}</td>
+            <td>£{{ event.ticket_price }}</td>
         </tr>
         {% endfor %}
     </tbody>
