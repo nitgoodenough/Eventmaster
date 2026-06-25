@@ -131,11 +131,14 @@ def new_registration():
 @main.route('/reports')
 def reports():
     events = Event.query.all()
-    report_data = []
-    for event in events:  # loop through each event and calculate stats
-        report_data.append({
-            'event': event,
-            'registrations': len(event.registrations),  # count registrations for this event
-            'revenue': len(event.registrations) * event.ticket_price  # total revenue
-        })
-    return render_template('reports/index.html', report_data=report_data) # last part
+    total_events = Event.query.count()
+    total_registrations = Registration.query.count()
+    total_speakers = Speaker.query.count()
+    # revenue = registrations times ticket price, added up across every event
+    total_revenue = sum(len(e.registrations) * e.ticket_price for e in events)
+    return render_template('reports/index.html',
+                           events=events,
+                           total_events=total_events,
+                           total_registrations=total_registrations,
+                           total_speakers=total_speakers,
+                           total_revenue=total_revenue)
