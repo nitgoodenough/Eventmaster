@@ -78,3 +78,51 @@ h1 {
     text-transform: uppercase;
     letter-spacing: 1px;
 }
+
+/* forms look cleaner */
+.form-control, .form-select {
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #e94560;
+    box-shadow: 0 0 0 0.2rem rgba(233, 69, 96, 0.15);
+}
+
+.form-label {
+    font-weight: 500;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* badge colours */
+.badge.bg-success {
+    background-color: #2ecc71 !important;
+    font-weight: 500;
+}
+
+/* container padding so pages breathe a bit */
+.container {
+    padding-bottom: 40px;
+}
+
+/* page headings */
+h3 {
+    font-weight: 600;
+    color: #1a1a2e;
+}
+
+/* outline buttons match theme */
+.btn-outline-primary {
+    color: #e94560;
+    border-color: #e94560;
+}
+
+.btn-outline-primary:hover {
+    background-color: #e94560;
+    border-color: #e94560;
+    color: white;
+}
