@@ -9,15 +9,16 @@
 
 {% if speakers %}
 <div class="row">
-    <!-- loop through each speaker and display as a card -->
     {% for speaker in speakers %}
-    <div class="col-md-4 mb-3">
+    <div class="col-md-4 mb-4">
         <div class="card h-100">
             <div class="card-body">
                 <h5 class="card-title">{{ speaker.name }}</h5>
-                <p class="text-muted mb-1">{{ speaker.expertise }}</p>
-                <p class="card-text">{{ speaker.bio }}</p>
-                <small class="text-muted">{{ speaker.email }}</small>
+                {% if speaker.expertise %}
+                <span class="badge mb-2" style="background-color:#e94560">{{ speaker.expertise }}</span>
+                {% endif %}
+                <p class="card-text text-muted small">{{ speaker.bio }}</p>
+                <a href="mailto:{{ speaker.email }}" class="text-muted small">{{ speaker.email }}</a>
             </div>
         </div>
     </div>
