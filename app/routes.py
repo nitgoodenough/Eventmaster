@@ -13,13 +13,18 @@ def dashboard(): # fx ran when user visits homepage
     total_events = Event.query.count()
     total_registrations = Registration.query.count()
     total_speakers = Speaker.query.count()
-    upcoming_events = Event.query.filter_by(status='upcoming').all() # Finds all events with status 'upcoming' and returns them as a list
-    # render_template loads the html file and passes data to it so Jinja2 can fill in the placeholders
+    upcoming_events = Event.query.filter_by(status='upcoming').all()
+    all_events = Event.query.all()
+    # build chart data - list of event names and how many registrations each has
+    event_names = [e.name for e in all_events]
+    event_reg_counts = [len(e.registrations) for e in all_events]
     return render_template('dashboard.html',
                            total_events=total_events,
                            total_registrations=total_registrations,
                            total_speakers=total_speakers,
-                           upcoming_events=upcoming_events)
+                           upcoming_events=upcoming_events,
+                           event_names=event_names,
+                           event_reg_counts=event_reg_counts)
 # Load the dashboard.html file and pass all those numbers/lists to it so the HTML can display them.
 
 # ─── Events ──────────────────────────────────────────────────────────────────
